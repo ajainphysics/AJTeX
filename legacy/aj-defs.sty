@@ -1,0 +1,466 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Custom Definitions Package (aj-defs)               %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Author: Akash Jain                                 %%%
+%%% Email: ajainphysx@gmail.com                        %%%
+%%% Last Updated: Aug 02, 2015                         %%%
+%%% Description: This package contains a long list of  %%%
+%%%  really useful redefinitions.                      %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{aj-defs}[2015/01/18 Custom Definitions Package by Akash Jain]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LaTeX options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{amssymb} 
+\RequirePackage{bm}
+\RequirePackage{relsize}
+
+\RequirePackage[Symbolsmallscale]{upgreek}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Redefinitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% counting aids
+
+\newcommand{\countstart}{}
+\newcommand{\countstop}{}
+
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\sep}{\rule{\textwidth}{0.4pt}}
+
+%% Equation Commands
+
+\newcommand{\nn}{\nonumber}
+
+\newcommand{\ben}{\begin{eqnarray}\displaystyle}
+\newcommand{\een}{\end{eqnarray}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+
+\newcommand{\bea}[1]{\begin{align}#1\end{align}}
+\newcommand{\bem}[1]{\begin{multline}#1\end{multline}}
+\newcommand{\bee}[1]{\begin{equation}#1\end{equation}}
+
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+\newcommand{\beebox}[1]{\begin{empheq}[box=\widefbox]{equation}#1\end{empheq}}
+\newcommand{\beabox}[1]{\begin{empheq}[box=\widefbox]{align}#1\end{empheq}}
+
+
+\newcommand{\dbrk}{\right. \\ \left.}
+\newcommand{\tbrk}{\right. \right. \\ \left. \left.}
+\newcommand{\qbrk}{\right. \right. \right. \\ \left. \left. \left.}
+\newcommand{\bfrac}[2]{\lb\frac{#1}{#2}\rb}
+\newcommand*{\brfrac}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+
+\newcommand{\dsp}{\displaystyle}
+
+\newcommand{\doubt}[1]{\hl{\textbf{Doubt:} #1}}
+
+%% Text Commands
+
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+
+%% Math Symbols
+
+\newcommand{\grad}{{\rm {\bf \nabla}}}
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+%\newcommand{\qed}{\begin{flushright} \ensuremath{\Box} \end{flushright}}
+\newcommand{\norm}[1]{|\!| #1 |\!|}
+\newcommand{\BT}{\blacktriangle}
+
+\newcommand{\df}{\mathrm{d}}
+\newcommand{\lie}{\pounds}
+\newcommand{\Df}{\mathrm{D}}
+
+%% Symbol Shortcuts
+\renewcommand{\a}{\alpha}	%%% Redefinition
+\renewcommand{\b}{\beta}		%%% Redefinition
+\renewcommand{\c}{\chi}		%%% Redefinition
+\renewcommand{\d}{\delta}	%%% Redefinition
+\newcommand{\dow}{\partial}
+\newcommand{\e}{\epsilon}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\f}{\phi}
+\newcommand{\vf}{\varphi}
+\newcommand{\g}{\gamma}
+\newcommand{\h}{\hbar}
+\newcommand{\hs}{\hslash}
+\renewcommand{\i}{\iota}		%%% Redefinition
+%\renewcommand{\j}{}
+\renewcommand{\k}{\kappa}	%%% Redefinition
+\renewcommand{\l}{\lambda}	%%% Redefinition
+\newcommand{\m}{\mu}								%%% Useless
+\newcommand{\n}{\nu}								%%% Useless
+\renewcommand{\o}{\omega}	%%% Redefinition
+\newcommand{\p}{\psi}								%%% Useless
+\newcommand{\vp}{\varpi}							%%% Useless
+\newcommand{\q}{\theta}	
+\newcommand{\vq}{\vartheta}	
+\renewcommand{\r}{\rho}		%%% Redefinition
+%\newcommand{\vr}{\varrho}	%%% Redefinition
+\newcommand{\s}{\sigma}
+\newcommand{\vs}{\varsigma}
+\renewcommand{\t}{\tau}		%%% Redefinition
+\renewcommand{\u}{\upsilon}	%%% Redefinition
+%\renewcommand{\v}{}
+%\newcommand{\w}{}
+\newcommand{\x}{\xi}								%%% Useless
+%\renewcommand{\y}{}
+\newcommand{\z}{\zeta}
+
+\newcommand{\A}{\forall}
+\newcommand{\B}{\Box}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\Delta}
+\newcommand{\E}[1]{\mathrm{e}^{#1}}
+\newcommand{\F}{\Phi}
+\newcommand{\G}{\Gamma}
+\newcommand{\I}{\infty}
+\renewcommand{\L}{\Lambda}	%%% Redefinition
+\newcommand{\M}{\mho}
+\newcommand{\N}{\nabla}
+\renewcommand{\O}{\Omega}	%%% Redefinition
+\renewcommand{\P}{\Psi}		%%% Redefinition		%%% Useless
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\Theta}
+%\renewcommand{\S}{\Sigma}	%%% Redefinition
+\newcommand{\U}{\Upsilon}
+\newcommand{\X}{\Xi}								%%% Useless
+\newcommand{\Z}{\mathcal{Z}}
+
+%% Caligraphy
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%% Bold Caligraphy
+\newcommand{\bcA}{\bm{\mathcal{A}}}
+\newcommand{\bcB}{\bm{\mathcal{B}}}
+\newcommand{\bcC}{\bm{\mathcal{C}}}
+\newcommand{\bcD}{\bm{\mathcal{D}}}
+\newcommand{\bcE}{\bm{\mathcal{E}}}
+\newcommand{\bcF}{\bm{\mathcal{F}}}
+\newcommand{\bcG}{\bm{\mathcal{G}}}
+\newcommand{\bcH}{\bm{\mathcal{H}}}
+\newcommand{\bcI}{\bm{\mathcal{I}}}
+\newcommand{\bcJ}{\bm{\mathcal{J}}}
+\newcommand{\bcK}{\bm{\mathcal{K}}}
+\newcommand{\bcL}{\bm{\mathcal{L}}}
+\newcommand{\bcM}{\bm{\mathcal{M}}}
+\newcommand{\bcN}{\bm{\mathcal{N}}}
+\newcommand{\bcO}{\bm{\mathcal{O}}}
+\newcommand{\bcP}{\bm{\mathcal{P}}}
+\newcommand{\bcQ}{\bm{\mathcal{Q}}}
+\newcommand{\bcR}{\bm{\mathcal{R}}}
+\newcommand{\bcS}{\bm{\mathcal{S}}}
+\newcommand{\bcT}{\bm{\mathcal{T}}}
+\newcommand{\bcU}{\bm{\mathcal{U}}}
+\newcommand{\bcV}{\bm{\mathcal{V}}}
+\newcommand{\bcW}{\bm{\mathcal{W}}}
+\newcommand{\bcX}{\bm{\mathcal{X}}}
+\newcommand{\bcY}{\bm{\mathcal{Y}}}
+\newcommand{\bcZ}{\bm{\mathcal{Z}}}
+
+%% mathsmaller
+\newcommand{\sA}{{\mathsmaller{A}}}
+\newcommand{\sB}{{\mathsmaller{B}}}
+\newcommand{\sC}{{\mathsmaller{C}}}
+\newcommand{\sD}{{\mathsmaller{D}}}
+\newcommand{\sE}{{\mathsmaller{E}}}
+\newcommand{\sF}{{\mathsmaller{F}}}
+\newcommand{\sG}{{\mathsmaller{G}}}
+\newcommand{\sH}{{\mathsmaller{H}}}
+\newcommand{\sI}{{\mathsmaller{I}}}
+\newcommand{\sJ}{{\mathsmaller{J}}}
+\newcommand{\sK}{{\mathsmaller{K}}}
+\newcommand{\sL}{{\mathsmaller{L}}}
+\newcommand{\sM}{{\mathsmaller{M}}}
+\newcommand{\sN}{{\mathsmaller{N}}}
+\newcommand{\sO}{{\mathsmaller{O}}}
+\newcommand{\sP}{{\mathsmaller{P}}}
+\newcommand{\sQ}{{\mathsmaller{Q}}}
+\newcommand{\sR}{{\mathsmaller{R}}}
+\newcommand{\sS}{{\mathsmaller{S}}}
+\newcommand{\sT}{{\mathsmaller{T}}}
+\newcommand{\sU}{{\mathsmaller{U}}}
+\newcommand{\sV}{{\mathsmaller{V}}}
+\newcommand{\sW}{{\mathsmaller{W}}}
+\newcommand{\sX}{{\mathsmaller{X}}}
+\newcommand{\sY}{{\mathsmaller{Y}}}
+\newcommand{\sZ}{{\mathsmaller{Z}}}
+\newcommand\ms{\mathsmaller}
+
+%% mathbb
+\newcommand{\bbA}{\mathbb{A}}
+\newcommand{\bbB}{\mathbb{B}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbD}{\mathbb{D}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbG}{\mathbb{G}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbI}{\mathbb{I}}
+\newcommand{\bbJ}{\mathbb{J}}
+\newcommand{\bbK}{\mathbb{K}}
+\newcommand{\bbL}{\mathbb{L}}
+\newcommand{\bbM}{\mathbb{M}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbO}{\mathbb{O}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbS}{\mathbb{S}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbU}{\mathbb{U}}
+\newcommand{\bbV}{\mathbb{V}}
+\newcommand{\bbW}{\mathbb{W}}
+\newcommand{\bbX}{\mathbb{X}}
+\newcommand{\bbY}{\mathbb{Y}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+%% bm
+\newcommand{\bA}{\bm{A}}
+\newcommand{\bB}{\bm{B}}
+\newcommand{\bC}{\bm{C}}
+\newcommand{\bD}{\bm{D}}
+\newcommand{\bE}{\bm{E}}
+\newcommand{\bF}{\bm{F}}
+\newcommand{\bG}{\bm{G}}
+\newcommand{\bH}{\bm{H}}
+\newcommand{\bI}{\bm{I}}
+\newcommand{\bJ}{\bm{J}}
+\newcommand{\bK}{\bm{K}}
+\newcommand{\bL}{\bm{L}}
+\newcommand{\bM}{\bm{M}}
+\newcommand{\bN}{\bm{N}}
+\newcommand{\bO}{\bm{O}}
+\newcommand{\bP}{\bm{P}}
+\newcommand{\bQ}{\bm{Q}}
+\newcommand{\bR}{\bm{R}}
+\newcommand{\bS}{\bm{S}}
+\newcommand{\bT}{\bm{T}}
+\newcommand{\bU}{\bm{U}}
+\newcommand{\bV}{\bm{V}}
+\newcommand{\bW}{\bm{W}}
+\newcommand{\bX}{\bm{X}}
+\newcommand{\bY}{\bm{Y}}
+\newcommand{\bZ}{\bm{Z}}
+
+%% mathrm
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmD}{\mathrm{D}}
+\newcommand{\rmE}{\mathrm{E}}
+\newcommand{\rmF}{\mathrm{F}}
+\newcommand{\rmG}{\mathrm{G}}
+\newcommand{\rmH}{\mathrm{H}}
+\newcommand{\rmI}{\mathrm{I}}
+\newcommand{\rmJ}{\mathrm{J}}
+\newcommand{\rmK}{\mathrm{K}}
+\newcommand{\rmL}{\mathrm{L}}
+\newcommand{\rmM}{\mathrm{M}}
+\newcommand{\rmN}{\mathrm{N}}
+\newcommand{\rmO}{\mathrm{O}}
+\newcommand{\rmP}{\mathrm{P}}
+\newcommand{\rmQ}{\mathrm{Q}}
+\newcommand{\rmR}{\mathrm{R}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+\newcommand{\rmU}{\mathrm{U}}
+\newcommand{\rmV}{\mathrm{V}}
+\newcommand{\rmW}{\mathrm{W}}
+\newcommand{\rmX}{\mathrm{X}}
+\newcommand{\rmY}{\mathrm{Y}}
+\newcommand{\rmZ}{\mathrm{Z}}
+
+%% mathscr
+\newcommand{\scrA}{\mathscr{A}}
+\newcommand{\scrB}{\mathscr{B}}
+\newcommand{\scrC}{\mathscr{C}}
+\newcommand{\scrD}{\mathscr{D}}
+\newcommand{\scrE}{\mathscr{E}}
+\newcommand{\scrF}{\mathscr{F}}
+\newcommand{\scrG}{\mathscr{G}}
+\newcommand{\scrH}{\mathscr{H}}
+\newcommand{\scrI}{\mathscr{I}}
+\newcommand{\scrJ}{\mathscr{J}}
+\newcommand{\scrK}{\mathscr{K}}
+\newcommand{\scrL}{\mathscr{L}}
+\newcommand{\scrM}{\mathscr{M}}
+\newcommand{\scrN}{\mathscr{N}}
+\newcommand{\scrO}{\mathscr{O}}
+\newcommand{\scrP}{\mathscr{P}}
+\newcommand{\scrQ}{\mathscr{Q}}
+\newcommand{\scrR}{\mathscr{R}}
+\newcommand{\scrS}{\mathscr{S}}
+\newcommand{\scrT}{\mathscr{T}}
+\newcommand{\scrU}{\mathscr{U}}
+\newcommand{\scrV}{\mathscr{V}}
+\newcommand{\scrW}{\mathscr{W}}
+\newcommand{\scrX}{\mathscr{X}}
+\newcommand{\scrY}{\mathscr{Y}}
+\newcommand{\scrZ}{\mathscr{Z}}
+
+%% mathsf
+\newcommand{\sfA}{\mathsf{A}}
+\newcommand{\sfB}{\mathsf{B}}
+\newcommand{\sfC}{\mathsf{C}}
+\newcommand{\sfD}{\mathsf{D}}
+\newcommand{\sfE}{\mathsf{E}}
+\newcommand{\sfF}{\mathsf{F}}
+\newcommand{\sfG}{\mathsf{G}}
+\newcommand{\sfH}{\mathsf{H}}
+\newcommand{\sfI}{\mathsf{I}}
+\newcommand{\sfJ}{\mathsf{J}}
+\newcommand{\sfK}{\mathsf{K}}
+\newcommand{\sfL}{\mathsf{L}}
+\newcommand{\sfM}{\mathsf{M}}
+\newcommand{\sfN}{\mathsf{N}}
+\newcommand{\sfO}{\mathsf{O}}
+\newcommand{\sfP}{\mathsf{P}}
+\newcommand{\sfQ}{\mathsf{Q}}
+\newcommand{\sfR}{\mathsf{R}}
+\newcommand{\sfS}{\mathsf{S}}
+\newcommand{\sfT}{\mathsf{T}}
+\newcommand{\sfU}{\mathsf{U}}
+\newcommand{\sfV}{\mathsf{V}}
+\newcommand{\sfW}{\mathsf{W}}
+\newcommand{\sfX}{\mathsf{X}}
+\newcommand{\sfY}{\mathsf{Y}}
+\newcommand{\sfZ}{\mathsf{Z}}
+
+%% Mathfrak
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\fD}{\mathfrak{D}}
+\newcommand{\fE}{\mathfrak{E}}
+\newcommand{\fF}{\mathfrak{F}}
+\newcommand{\fG}{\mathfrak{G}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\fI}{\mathfrak{I}}
+\newcommand{\fJ}{\mathfrak{J}}
+\newcommand{\fK}{\mathfrak{K}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\fN}{\mathfrak{N}}
+\newcommand{\fO}{\mathfrak{O}}
+\newcommand{\fP}{\mathfrak{P}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\fR}{\mathfrak{R}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\fT}{\mathfrak{T}}
+\newcommand{\fU}{\mathfrak{U}}
+\newcommand{\fV}{\mathfrak{V}}
+\newcommand{\fW}{\mathfrak{W}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\fY}{\mathfrak{Y}}
+\newcommand{\fZ}{\mathfrak{Z}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fc}{\mathfrak{c}}
+\newcommand{\fd}{\mathfrak{d}}
+\newcommand{\fe}{\mathfrak{e}}
+\newcommand{\ff}{\mathfrak{f}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fii}{\mathfrak{i}}		%%% Out of Order
+\newcommand{\fj}{\mathfrak{j}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fl}{\mathfrak{l}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fo}{\mathfrak{o}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fr}{\mathfrak{r}}
+\newcommand{\fs}{\mathfrak{s}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fv}{\mathfrak{v}}
+\newcommand{\fw}{\mathfrak{w}}
+\newcommand{\fx}{\mathfrak{x}}
+\newcommand{\fy}{\mathfrak{y}}
+\newcommand{\fz}{\mathfrak{z}}
+
+%% Standard Functions
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\newcommand{\sina}[1]{\sin\lb #1 \rb}
+\newcommand{\cosa}[1]{\cos\lb #1 \rb}
+\newcommand{\tana}[1]{\tan\lb #1 \rb}
+\newcommand{\cota}[1]{\cot\lb #1 \rb}
+\newcommand{\seca}[1]{\sec\lb #1 \rb}
+\newcommand{\csca}[1]{\csc\lb #1 \rb}
+\newcommand{\loga}[1]{\log\lb #1 \rb}
+\newcommand{\lna}[1]{\ln\lb #1 \rb}
+\newcommand{\Tr}[1]{\mathrm{Tr}\lB #1\rB}
+\newcommand{\Ad}[1]{\mathrm{Ad}\lB #1\rB}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nul}{nul}
+\DeclareMathOperator{\Diff}{Diff}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\diag}{diag}
+
+%% Symbols
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\nra}{\nrightarrow}
+\newcommand{\nRa}{\nRightarrow}
+\newcommand{\lB}{\left [}
+\newcommand{\rB}{\right ]}
+\newcommand{\lb}{\left (}
+\newcommand{\rb}{\right )}
+\newcommand{\lbr}{\left \{}
+\newcommand{\rbr}{\right \}}
+\newcommand{\<}{\left\langle}
+\renewcommand{\>}{\right\rangle}		%%% Redefinition
+\newcommand{\ld}{\left.}
+\newcommand{\rd}{\right.}
+
+\newcommand{\bra}[1]{\left\langle #1\right\vert}
+\newcommand{\ket}[1]{\left\vert #1\right\rangle}
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\usepackage[mathscr]{euscript}
