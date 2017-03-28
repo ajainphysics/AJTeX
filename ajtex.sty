@@ -47,6 +47,10 @@
 \newcommand{\gafourpaper}{0}
 \DeclareVoidOption{a4paper}{\renewcommand{\gafourpaper}{1}}
 
+% basic start
+\newcommand{\gbasic}{0}
+\DeclareVoidOption{basic}{\renewcommand{\gbasic}{1}}
+
 %%% Document Class
 \newcommand{\gclass}{article}
 \@ifclassloaded{book}{\renewcommand{\gclass}{book}}{}
@@ -132,8 +136,11 @@
   \RequirePackage{datetime}
   \newcommand*\shortyear[1]{\expandafter\@gobbletwo\number\numexpr#1\relax}
   \newdateformat{smalldate}{\THEDAY~\shortmonthname[\THEMONTH]'\shortyear{\THEYEAR}}
-  \IfStrEq{\gifdraft}{1}{ \newcommand{\gModDate}{{\smalldate \today}, \currenttime}
-    \newcommand{\gModDateLong}{\today, \currenttime} }{} \usdate
+  \IfStrEq{\gifdraft}{1}{
+    \newcommand{\gModDate}{{\smalldate \today}, \currenttime}
+    \newcommand{\gModDateLong}{\today~at~\currenttime}
+  }{}
+  \usdate
      
   %%% Page layout and formatting %%%%%%%%%%%%%%%%%%%%%%%%%%%
   
@@ -253,7 +260,9 @@
     \csdef{author-affil\theauthors}{#1}%
     \csdef{author-name\theauthors}{#2}%
   }
+  \csdef{author-email-switch}{0}
   \newcommand\email[1]{
+    \csdef{author-email-switch}{1}%
     \csdef{author-email\theauthors}{#1}%
   }
   \newcommand\note[1]{
@@ -281,7 +290,9 @@
   \newcommand{\gAbstractSwitch}{\csuse{setgAbstract-switch}}
 
 
-  \csdef{setgPreprint}{} \csdef{setgPreprint-switch}{0} \providecommand\preprint[1]{}
+  \csdef{setgPreprint}{}
+  \csdef{setgPreprint-switch}{0}
+  \providecommand\preprint[1]{}
   \renewcommand\preprint[1]{%
     \csdef{setgPreprint}{#1}%
     \csdef{setgPreprint-switch}{1}%
@@ -292,19 +303,24 @@
 
   \renewcommand{\maketitle}{
     \thispagestyle{empty}
-
-    \ \\
-
-    \vspace{2em}
-
-    \IfStrEq{\gPreprintSwitch}{}{}{ \vspace{-8em}
+    
+    \IfStrEq{\gPreprintSwitch}{0}{}{
+      \ \\
+      \vspace{-6em}
       \begin{flushright}
         {\raggedleft \gPreprint}
       \end{flushright}
       \vspace{6em}
+      \IfStrEq{\gnotitlepage}{1}{\vspace{-2em}}{}
+      \IfStrEq{\gbasic}{1}{\vspace{-2em}}{}
     }
+
     
+    \if\gbasic0
     {\raggedright \bfseries \huge \gTitle \par}
+    \else
+    {\raggedright \bfseries \LARGE \gTitle \par}
+    \fi
     
     \vspace{2em}
     \hrule height 1.5pt
@@ -324,12 +340,15 @@
         }\par%
       \end{symbolfootnotes}%
 
+      \if\theaffils0\else
       \setlength{\leftskip}{1em}%
       \foreach \index in {1, ..., \theaffils}{
         \textsuperscript{\csuse{affil-id\index}}\csuse{affil-name\index} \par
       }
       \setlength{\leftskip}{0em}%
-      
+      \fi
+
+      \if\csuse{author-email-switch}1
       \blfootnote{\raggedright%
         E-mail:
         \foreach \index in {1, ...,\theauthors}{%
@@ -337,6 +356,7 @@
           {\ifnum\index=\theauthors{}\else,\fi}
         }
       }
+      \fi
     }
 
     \setlength{\leftskip}{1em}%
@@ -354,27 +374,39 @@
     % date
     \vspace{1em}
     {\hspace{-1em}%
-      \IfStrEq{\gifdraft}{1}{\textsc{Drafted}: \gModDateLong}{\textsc{Dated}: \today}%
-      \par}%
+      \IfStrEq{\gbasic}{1}{%
+        \IfStrEq{\gifdraft}{1}{\gModDateLong~(draft)}{\today}%
+      }{%
+        \IfStrEq{\gifdraft}{1}{\textsc{Drafted}: \gModDateLong}{\textsc{Dated}: \today}%
+      }
+      \par%
+    }%
 
+    \IfStrEq{\gbasic}{1}{}{
     \vspace{1em}
     {%
       \hspace{-1em}%
       \textsc{Comments}:
-      \FPeval{\totalpagesminusone}{clip(\totalpages - 1)}$\totalpagesminusone+1$~pages,~%
+      \iftotalpages\FPeval{\totalpagesminusone}{clip(\totalpages - 1)}$\totalpagesminusone+1$~pages,~\fi%
       \iftotalfigures\totalfigures~figures,~\fi%
-      \iftotaltables\totaltables~figures,~\fi%
+      \iftotaltables\totaltables~tables,~\fi%
       \LaTeX \par}
+    }
 
     \setlength{\leftskip}{0em}%
     
     % page-break
-    \IfStrEq{\gnotitlepage}{1}{}{\newpage\flushbottom}
+    \IfStrEq{\gnotitlepage}{1}{}{\IfStrEq{\gbasic}{1}{}{\newpage}}
   
     % table of contents
     \IfStrEq{\gnolistofcontents}{1}{}{
-      \tableofcontents
+      \IfStrEq{\gbasic}{1}{}{
+        \tableofcontents
+      }
     }
+    \flushbottom
+
+    \vspace{1em}
   }
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -463,20 +495,27 @@
   % \addbibresource{ajtex.bib} \addbibresource{\jobname.bib}
   
   % \newcommand{\makereferences}{\printbibliography[heading=bibintoc]}
+  
+  \RequirePackage[numbers,sort&compress]{natbib}
+  \renewcommand*{\bibfont}{\small}
+  \bibliographystyle{JHEP}
 
-  \RequirePackage[numbers,compress]{natbib}
-  \newcommand{\makereferences}{
-    \renewcommand*{\bibfont}{\small}
-    \bibliographystyle{JHEP}
-    \bibliography{ajtex,\jobname}
+  \IfFileExists{\jobname.bib}{
+    \newcommand*\thebibresources{\jobname}
+  }{
+    \newcommand*\thebibresources{ajtex}
   }
+  \newcommand*\bibresources[1]{
+    \renewcommand\thebibresources{#1}
+  }
+  
+  \newcommand*\makereferences{\bibliography{\thebibresources}}
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   
 } % styling ends here, now except styling
 {
   \newcommand{\makereferences}{
-    \renewcommand*{\bibfont}{\small}
     \bibliographystyle{JHEP}
     \bibliography{ajtex,\jobname}
   }
