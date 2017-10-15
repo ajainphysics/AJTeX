@@ -17,3 +17,11 @@ Option | Description
 `a4paper` | A4 size will be used.
 `basic` | Turn on basic mode.
 `article`, `book`, `cv` | Switch between article, book or CV mode. Default `article`.
+
+### Custom Macro
+
+Macro | Description
+--- | ---
+`\title{<Title>}` | Title of the document.
+`\author[<Symbols>]{<Name>}` | Name of the author and optional symbols to match with affiliation.
+`\note{<Note>}` | A footnote giving more information about an author. Gets assigned to the last `\author` declaration. 
