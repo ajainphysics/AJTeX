@@ -29,3 +29,6 @@ Macro | Description
 `\affiliation[#aff]{#affiliation}` | Declares an affiliation `#affiliation` with label `#aff` for authors. Label `#aff` is intended to be a character or a comma separated list of characters. This command can be used multiple times for multiple affiliations.
 `\abstract{#abstract}` | Declares the abstract of the document, given by `#abstract`.
 `\preprint{#preprint}` | Declares a preprint identifier for the document.
+`\maketitle` | Prints the title page.
+`\acknowledgements` | Prints the heading for acknowledgements.
+`\makereferences` | Prints the bibliography.
