@@ -22,7 +22,7 @@ Option | Description
 
 Macro | Description
 --- | ---
-`\title{...}` | Title of the document.
-`\author[...]{...}` | Name of the author and optional symbols to match with affiliation.
-`\note{...}` | A footnote giving more information about an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
-`\email{...}` | 
+`\title{#title}` | Sets the title of the document given by `#title`.
+`\author[#aff]{#name}` | Sets an author of the document, with name `#name` and affiliation label `#aff`. This command can be used multiple times in case of a multi-authored document.
+`\note{#note}` | Declares a footnote with content `#note` giving more information about an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
+`\email{#email}` | Declares email address `#email` for an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
