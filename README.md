@@ -23,6 +23,9 @@ Option | Description
 Macro | Description
 --- | ---
 `\title{#title}` | Sets the title of the document given by `#title`.
-`\author[#aff]{#name}` | Sets an author of the document, with name `#name` and affiliation label `#aff`. This command can be used multiple times in case of a multi-authored document.
-`\note{#note}` | Declares a footnote with content `#note` giving more information about an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
-`\email{#email}` | Declares email address `#email` for an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
+`\author[#aff]{#name}` | Sets an author of the document, with name `#name` and affiliation label `#aff`. Label `#aff` is intended to be a character or a comma separated list of characters. This command can be used multiple times in case of a multi-authored document.
+`\note{#note}` | Declares a footnote with content `#note` giving more information about an author. Gets assigned to the last `\author` declaration. Only one note per author is allowed. If in conflict, the last declaration of `\note` supercedes.
+`\email{#email}` | Declares an email address `#email` for an author. Gets assigned to the last `\author` declaration. Only one email address per author is allowed. If in conflict, the last declaration of `\note` supercedes.
+`\affiliation[#aff]{#affiliation}` | Declares an affiliation `#affiliation` with label `#aff` for authors. Label `#aff` is intended to be a character or a comma separated list of characters. This command can be used multiple times for multiple affiliations.
+`\abstract{#abstract}` | Declares the abstract of the document, given by `#abstract`.
+`\preprint{#preprint}` | Declares a preprint identifier for the document.
