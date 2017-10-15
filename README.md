@@ -22,6 +22,7 @@ Option | Description
 
 Macro | Description
 --- | ---
-`\title{<Title>}` | Title of the document.
-`\author[<Symbols>]{<Name>}` | Name of the author and optional symbols to match with affiliation.
-`\note{<Note>}` | A footnote giving more information about an author. Gets assigned to the last `\author` declaration. 
+`\title{...}` | Title of the document.
+`\author[...]{...}` | Name of the author and optional symbols to match with affiliation.
+`\note{...}` | A footnote giving more information about an author. Gets assigned to the last `\author` declaration. If in conflict, the last declaration of `\note` supercedes.
+`\email{...}` | 
