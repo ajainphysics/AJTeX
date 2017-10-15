@@ -1,6 +1,6 @@
 # AJTeX
 
-A LaTeX styling package by Akash Jain.
+This is a LaTeX styling package for awesome looking documents. I am a theoretical physicist, so the style is more or less optimized for research papers. Feel free to use it, but at your own risk. Found a bug or want to contribute? Contact me at `ajainphysics@gmail.com`.
 
 
 ## ajtex.sty
