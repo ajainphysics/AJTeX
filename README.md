@@ -35,7 +35,7 @@ Macro | Description
 
 ## ajtex-defs.sty
 
-The main feature of ajtex-defs.sty is the quotemacros.
+The main feature of ajtex-defs.sty is the quotemacros. First we have single small characters turning into greek characters:
 
 | "Macro | Macro    | "Macro | Macro   | "Macro | Macro    | "Macro | Macro     
 | -----: | -------- | -----: | ------- | -----: | -------- | -----: | ------ 
@@ -47,6 +47,14 @@ The main feature of ajtex-defs.sty is the quotemacros.
 | `"f` | `\phi`     | `"m` | `\mu`     | `"t` | `\tau`     |
 | `"g` | `\gamma`   | `"n` | `\nu`     | `"u` | `\upsilon` |
 
+Then we have are six variants:
+
+| "Macro | Macro        | "Macro | Macro      | "Macro | Macro    
+| -----: | ------------ | -----: | ---------- | -----: | ---------
+| `"ve` | `\varepsilon` | `"vp` | `\varpi`    | `"vr` | `\varrho`  
+| `"vf` | `\varphi      | `"vq` | `\vartheta` | `"vs` | `\varsigma`
+
+The single capitals transform to:
 
 | "Macro | Macro    | "Macro | Macro   | "Macro | Macro    | "Macro | Macro     
 | -----: | -------- | -----: | ------- | -----: | -------- | -----: | ------ 
