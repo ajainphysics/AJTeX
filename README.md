@@ -65,3 +65,18 @@ The single capitals transform to:
 | `"E` |            | `"L` | `\Lambda` | `"S` | `\Sigma`   | `"Z` |
 | `"F` | `\Phi`     | `"M` |           | `"T` |            |
 | `"G` | `\Gamma`   | `"N` |           | `"U` | `\Upsilon` |
+
+### Special fonts shortcuts
+
+| "Macro | Macro          | "Macro | Macro   
+| -----: | -------------- | -----: | -----------------
+|  `"ba` | `\bm{a}`       |  `"bA` | `\bm{A}`
+|        |                |  `"cA` | `\mathcal{A}`
+|        |                | `"bcA` | `\bm{\mathcal{A}}`
+|        |                |  `"sA` | `\mathsmaller{A}`
+|        |                | `"bbA` | `\mathbb{A}`
+| `"rma` | `\mathrm{a}`   | `"rmA` | `\mathrm{A}`
+| `"sca` | `\mathscr{a}`  | `"scA` | `\mathscr{A}`
+| `"sfa` | `\mathsf{a}`   | `"sfA` | `\mathsf{A}`
+|  `"fa` | `\mathfrak{a}` |  `"fA` | `\mathfrak{A}`
+
