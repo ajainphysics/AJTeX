@@ -68,6 +68,8 @@ The single capitals transform to:
 
 ### Special fonts shortcuts
 
+Extrapolate to the entire alphabet:
+
 | "Macro | Macro          | "Macro | Macro   
 | -----: | -------------- | -----: | -----------------
 |  `"ba` | `\bm{a}`       |  `"bA` | `\bm{A}`
