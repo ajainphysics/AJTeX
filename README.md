@@ -32,3 +32,17 @@ Macro | Description
 `\maketitle` | Prints the title page.
 `\acknowledgements` | Prints the heading for acknowledgements.
 `\makereferences` | Prints the bibliography.
+
+## ajtex-defs.sty
+
+The main feature of ajtex-defs.sty is the quotemacros.
+
+QuoteMacro | Macro      | QuoteMacro | Macro     | QuoteMacro | Macro      | QuoteMacro | Macro     
+---------: | ---------- | ---------: | --------- | ---------: | ---------- | ---------: | --------- 
+`"a`       | `\alpha`   | `"h`       | `\eta`    | `"o`       | `\omega`   | `"v`       |           
+`"b`       | `\beta`    | `"i`       | `\iota`   | `"p`       | `\pi`      | `"w`       | `\omega`  
+`"c`       | `\chi`     | `"j`       | `\varphi` | `"q`       | `\theta`   | `"x`       | `\xi`     
+`"d`       | `\delta`   | `"k`       | `\kappa`  | `"r`       | `\rho`     | `"y`       | `\psi`    
+`"e`       | `\epsilon` | `"l`       | `\lambda` | `"s`       | `\sigma`   | `"z`       | `\zeta`   
+`"f`       | `\phi`     | `"m`       | `\mu`     | `"t`       | `\tau`     | | 
+`"g`       | `\gamma`   | `"n`       | `\nu`     | `"u`       | `\upsilon` | |
