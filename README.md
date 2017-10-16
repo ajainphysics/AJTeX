@@ -58,10 +58,10 @@ The single capitals transform to:
 
 | "Macro | Macro    | "Macro | Macro   | "Macro | Macro    | "Macro | Macro     
 | -----: | -------- | -----: | ------- | -----: | -------- | -----: | ------ 
-| `"a` |            | `"h` |           | `"o` | `\Omega`   | `"v` |        
-| `"b` |            | `"i` |           | `"p` | `\Pi`      | `"w` | `\Omega`  
-| `"c` |            | `"j` |           | `"q` | `\Theta`   | `"x` | `\Xi`     
-| `"d` | `\Delta`   | `"k` |           | `"r` |            | `"y` | `\Psi`    
-| `"e` |            | `"l` | `\Lambda` | `"s` | `\Sigma`   | `"z` |
-| `"f` | `\Phi`     | `"m` |           | `"t` |            |
-| `"g` | `\Gamma`   | `"n` |           | `"u` | `\Upsilon` |
+| `"A` |            | `"H` |           | `"O` | `\Omega`   | `"V` |        
+| `"B` |            | `"I` |           | `"P` | `\Pi`      | `"W` | `\Omega`  
+| `"C` |            | `"J` |           | `"Q` | `\Theta`   | `"X` | `\Xi`     
+| `"D` | `\Delta`   | `"K` |           | `"R` |            | `"Y` | `\Psi`    
+| `"E` |            | `"L` | `\Lambda` | `"S` | `\Sigma`   | `"Z` |
+| `"F` | `\Phi`     | `"M` |           | `"T` |            |
+| `"G` | `\Gamma`   | `"N` |           | `"U` | `\Upsilon` |
