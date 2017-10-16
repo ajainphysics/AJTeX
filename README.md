@@ -46,3 +46,14 @@ The main feature of ajtex-defs.sty is the quotemacros.
 | `"e` | `\epsilon` | `"l` | `\lambda` | `"s` | `\sigma`   | `"z` | `\zeta`   
 | `"f` | `\phi`     | `"m` | `\mu`     | `"t` | `\tau`     |
 | `"g` | `\gamma`   | `"n` | `\nu`     | `"u` | `\upsilon` |
+
+
+| "Macro | Macro    | "Macro | Macro   | "Macro | Macro    | "Macro | Macro     
+| -----: | -------- | -----: | ------- | -----: | -------- | -----: | ------ 
+| `"a` |            | `"h` |           | `"o` | `\Omega`   | `"v` |        
+| `"b` |            | `"i` |           | `"p` | `\Pi`      | `"w` | `\Omega`  
+| `"c` |            | `"j` |           | `"q` | `\Theta`   | `"x` | `\Xi`     
+| `"d` | `\Delta`   | `"k` |           | `"r` |            | `"y` | `\Psi`    
+| `"e` |            | `"l` | `\Lambda` | `"s` | `\Sigma`   | `"z` |
+| `"f` | `\Phi`     | `"m` |           | `"t` |            |
+| `"g` | `\Gamma`   | `"n` |           | `"u` | `\Upsilon` |
