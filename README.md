@@ -52,7 +52,7 @@ Then we have are six variants:
 | "Macro | Macro        | "Macro | Macro      | "Macro | Macro    
 | -----: | ------------ | -----: | ---------- | -----: | ---------
 | `"ve` | `\varepsilon` | `"vp` | `\varpi`    | `"vr` | `\varrho`  
-| `"vf` | `\varphi      | `"vq` | `\vartheta` | `"vs` | `\varsigma`
+| `"vf` | `\varphi`      | `"vq` | `\vartheta` | `"vs` | `\varsigma`
 
 The single capitals transform to:
 
