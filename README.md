@@ -37,8 +37,8 @@ Macro | Description
 
 The main feature of ajtex-defs.sty is the quotemacros.
 
-| QuoteMacro | Macro      | QuoteMacro | Macro     | QuoteMacro | Macro      | QuoteMacro | Macro     
-| ---------: | ---------- | ---------: | --------- | ---------: | ---------- | ---------: | --------- 
+| "Macro | Macro    | "Macro | Macro   | "Macro | Macro    | "Macro | Macro     
+| -----: | -------- | -----: | ------- | -----: | -------- | -----: | ------ 
 | `"a` | `\alpha`   | `"h` | `\eta`    | `"o` | `\omega`   | `"v` |        
 | `"b` | `\beta`    | `"i` | `\iota`   | `"p` | `\pi`      | `"w` | `\omega`  
 | `"c` | `\chi`     | `"j` | `\varphi` | `"q` | `\theta`   | `"x` | `\xi`     
