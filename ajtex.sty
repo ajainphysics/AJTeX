@@ -55,6 +55,7 @@
 \newcommand{\gclass}{article}
 \@ifclassloaded{book}{\renewcommand{\gclass}{book}}{}
 \DeclareVoidOption{cv}{\renewcommand{\gclass}{cv}}
+\DeclareVoidOption{letter}{\renewcommand{\gclass}{letter}}
 
 \ProcessKeyvalOptions*
 
@@ -62,6 +63,8 @@
 \RequirePackage[T1]{fontenc} % T1 font encoding
 \RequirePackage{microtype}
 \RequirePackage[pangram]{blindtext} % Fake placeholder text
+
+\RequirePackage[sc,osf,slantedGreek]{mathpazo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%% Logical packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,7 +133,7 @@
    
   %%% Font %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
   
-  \RequirePackage{helvet} % helvet font package
+  %\RequirePackage{helvet} % helvet font package
   
   %%% Date and time %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
@@ -147,20 +150,31 @@
   
   %%% PAGE DIMENSIONS %%%
   \RequirePackage{geometry} % to change the page dimensions
-  \IfStrEq{\gafourpaper}{1}{\geometry{a4paper}}{\geometry{letterpaper}} % paper layout
+  \IfStrEq{\gafourpaper}{1}{\geometry{a4paper}}{\geometry{letterpaper}} % paper
+% layout
+
+  \geometry{
+    margin=1in,
+    tmargin=1.2in,
+    footskip=0.2in,
+    headsep=0.2in
+  }
+  
   \IfStrEq{\gclass}{cv}{
     \geometry{
-      margin=15mm,
-      tmargin=28mm,
-      footskip=5mm
+      margin=0.6in,
+      tmargin=0.9in,
+      footskip=0.2in,
+      headsep=0.2in
     }
-  }{
+  }{}
+
+  \IfStrEq{\gclass}{letter}{
     \geometry{
-      margin=25mm,
-      tmargin=33mm,
-      footskip=10mm
+      margin=0.75in,
+      tmargin=1in
     }
-  }
+  }{}
   
   \IfStrEq{\gclass}{book}{
     \geometry{bindingoffset=15mm}
@@ -176,7 +190,7 @@
   \RequirePackage{soul} % adds highlighting
 
   %%% TEXT COLORS %%%
-  \RequirePackage{xcolor} % To use colors
+  \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor} % To use colors
 
   %%% HYPERREF %%%
   \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}} % for hyper links
@@ -219,8 +233,16 @@
 
   \IfStrEq{\gclass}{cv}{
     % title formatting
-    \titleformat{\section}[hang]{\Large\bfseries}{}{0pt}{\Large\bfseries}[\vspace{1ex}\titlerule]
-    \renewcommand{\subsection}[1]{\subsubsection*{$\blacktriangleright$ #1}}
+    \titleformat{\section}[hang]{\vspace{-2ex}\large\bfseries}
+    {}{0pt}{\large\bfseries}
+    [\vspace{-2.5ex}\rule{\textwidth}{1pt}] 
+
+    \titleformat{\subsection}[hang]{\vspace{-2ex}\bfseries}
+    {$\blacktriangleright$\hspace{0.5em}}
+    {0pt}{\bfseries}[\vspace{-1.5ex}]
+    
+    %\renewcommand{\subsection}[1]{\subsubsection*{$\blacktriangleright$ #1}
+    %  \hspace{-20ex}}
   }{}
 
   %%% Headers and footers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -239,15 +261,15 @@
   \pagestyle{fancy}
   
   \fancyhf[HLO]{\footnotesize \hspace{1px}
-    \IfStrEq{\gheadertitle}{1}{\gTitle}{\nouppercase \leftmark}
-    \IfStrEq{\gifdraft}{1}{\ -- Draft (\gModDate)}{}}
+    \IfStrEq{\gheadertitle}{1}{\gTitle}{\nouppercase\rightmark}
+    \IfStrEq{\gifdraft}{1}{\ --- Draft (\gModDate)}{}}
   \fancyhf[HRO]{\footnotesize \textcolor{gray75}{\bfseries
-      $\vert$ \hspace{2px}} \thepage \hspace{1px}\ }
+      $\vert$ \hspace{2px}} \thepage\hspace{1px}\ }
   
   \fancyhf[HLE]{\footnotesize \hspace{1px} \thepage
     \textcolor{gray75}{\bfseries \hspace{2px} $\vert$}}
-  \fancyhf[HRE]{\footnotesize \nouppercase \rightmark
-    \IfStrEq{\gifdraft}{1}{\ -- Draft (\gModDate)}{} \hspace{1px}}
+  \fancyhf[HRE]{\footnotesize \nouppercase \leftmark
+    \IfStrEq{\gifdraft}{1}{\ --- Draft (\gModDate)}{} \hspace{1px}}
   
   \fancyhf[FL,FC,FR,HC]{}
 
@@ -583,7 +605,7 @@
   \IfFileExists{\jobname.bib}{
     \newcommand*\thebibresources{\jobname}
   }{
-    \newcommand*\thebibresources{mySpires_ajain}
+    \newcommand*\thebibresources{mySpires_ajain,ajtex}
   }
   \newcommand*\bibresources[1]{
     \renewcommand\thebibresources{#1}
