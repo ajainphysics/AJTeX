@@ -69,7 +69,7 @@
 \RequirePackage{microtype}
 \RequirePackage[pangram]{blindtext} % Fake placeholder text
 
-% \RequirePackage[sc,slantedGreek]{mathpazo} % osf
+\RequirePackage[sc,osf,slantedGreek]{mathpazo}
 
 %%% TEXT HIGHLIGHTING %%%
 \RequirePackage{soul} % adds highlighting
@@ -145,14 +145,12 @@
 \newcommand\g@switch@titlesecmod{1}
 \newcommand\g@switch@geometrymod{1}
 \newcommand\g@switch@maketitlemod{1}
-\newcommand\g@switch@headermod{1}
 
 \IfStrEq{\gclass}{beamer}{
   \renewcommand\g@switch@tocmod{0}
   \renewcommand\g@switch@titlesecmod{0}
   \renewcommand\g@switch@geometrymod{0}
   \renewcommand\g@switch@maketitlemod{0}
-  \renewcommand\g@switch@headermod{0}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,139 +158,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \IfStrEq{\gstyling}{1}{
-   
-  %%% Font %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-  
-  %\RequirePackage{helvet} % helvet font package
-  
-  %%% Date and time %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  \RequirePackage{datetime}
-  \newcommand*\shortyear[1]{\expandafter\@gobbletwo\number\numexpr#1\relax}
-  \newdateformat{smalldate}{\THEDAY~\shortmonthname[\THEMONTH]'\shortyear{\THEYEAR}}
-  \IfStrEq{\gifdraft}{1}{
-    \newcommand{\gModDate}{{\smalldate\today}, \currenttime}
-    \newcommand{\gModDateLong}{\today~at~\currenttime}
-  }{}
-  \usdate%
-     
-  %%% Page layout and formatting %%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  %%% PAGE DIMENSIONS %%%
 
-  \if\g@switch@geometrymod1
-  \RequirePackage{geometry} % to change the page dimensions
-  \IfStrEq{\gafourpaper}{1}{\geometry{a4paper}}{\geometry{letterpaper}} % paper
-% layout
-
-  \geometry{
-    margin=1in,
-    tmargin=1.2in,
-    footskip=0.2in,
-    headsep=0.2in
-  }
   
-  \IfStrEq{\gclass}{cv}{
-    \geometry{
-      margin=0.6in,
-      tmargin=0.9in,
-      footskip=0.2in,
-      headsep=0.2in
-    }
-  }{}
-
-  \IfStrEq{\gclass}{letter}{
-    \geometry{
-      margin=0.75in,
-      tmargin=1in
-    }
-  }{}
-  
-  \IfStrEq{\gclass}{book}{
-    \geometry{
-      margin=20mm,
-      tmargin=26mm,
-      headsep=4mm,
-      bindingoffset=20mm
-    }
-  }{}
-  \fi
-  
-  %%% TEXT SPACING %%%
-  \RequirePackage[parfill]{parskip} % begin paragraphs with an empty line rather than an indent
-  
-  \renewcommand{\baselinestretch}{1.2} % line space between different elements
-  \IfStrEq{\gclass}{cv}{\renewcommand{\baselinestretch}{1}}{}
-
-  %%% HYPERREF %%%
-  \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}} % for hyper links
-  \hypersetup{ colorlinks=true, % false: boxed links; true: colored links
-    linkcolor=blue, % color of internal links
-    citecolor=red, % color of links to bibliography
-    filecolor=blue, % color of file links
-    urlcolor=blue % color of external links
-  }
-
-  %%% Title and headings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  \if\g@switch@titlesecmod1
-  \setcounter{secnumdepth}{5} % Depth of sections
-
-  \RequirePackage{titlesec} % for changing title styles
-
-  \IfStrEq{\gclass}{article}{
-    \if\gbasic0
-    \titleformat{\section}[hang]{\Large\bfseries}{\thesection\hspace{10pt}
-      \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\Large\bfseries}[\vspace{1ex}\titlerule]
-    \else
-    \titleformat{\section}[hang]{\vspace{-1ex} \large\bfseries}{\thesection \hspace{10pt}
-      \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\large\bfseries}[\vspace{0.5ex}\titlerule]
-    \fi
-  }{}
-
-  \IfStrEq{\gclass}{book}{
-    \titlespacing*{\part}{0pt}{0pt}{20pt} \titlespacing*{\chapter}{0pt}{0pt}{20pt}
-  
-    \titleformat{\part}[display]{
-      \LARGE\centering}{\textbf{PART -
-        \thepart}}{1pt}{\LARGE\bfseries}[\vspace{2ex}\titlerule]
-    
-    \titleformat{\chapter}[hang]{\LARGE\bfseries}{\thechapter \hspace{20pt}
-      \textcolor{gray75}{$\vert$} \hspace{20pt}}{0pt}{\LARGE\bfseries}[\vspace{2ex}\titlerule]
-    
-    \titleformat{\section}[hang]{\Large\bfseries}{\thesection \hspace{10pt}
-      \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\Large\bfseries}[\vspace{1ex}\titlerule]
-  }{}
-
-  \IfStrEq{\gclass}{cv}{
-    % title formatting
-    \titleformat{\section}[hang]{\vspace{-2ex}\large\bfseries}
-    {}{0pt}{\large\bfseries}
-    [\vspace{-2.5ex}\rule{\textwidth}{1pt}] 
-
-    \titleformat{\subsection}[hang]{\vspace{-2ex}\bfseries}
-    {$\blacktriangleright$\hspace{0.5em}}
-    {0pt}{\bfseries}[\vspace{-1.5ex}]
-    
-    %\renewcommand{\subsection}[1]{\subsubsection*{$\blacktriangleright$ #1}
-    %  \hspace{-20ex}}
-  }{}
-  \fi
 
   %%% Headers and footers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \if\g@switch@headermod1
   \RequirePackage{fancyhdr} % This should be set AFTER setting up the page geometry
 
   \setlength{\headheight}{13.6pt}
   \newcommand{\headrulecolor}[1]{\patchcmd{\headrule}{\hrule}{\color{#1}\hrule}{}{}}
   \newcommand{\footrulecolor}[1]{\patchcmd{\footrule}{\hrule}{\color{#1}\hrule}{}{}}
 
-  \definecolor{gray75}{gray}{0.75} \headrulecolor{gray75}
-
-  \fancypagestyle{plain}{
-    \fancyhf[FL,FC,FR,HL,HC,HR]{}
-    \fancyhf[HLE,HRO]{\footnotesize \thepage}
+  \definecolor{gray75}{gray}{0.75} \headrulecolor{gray75} \fancypagestyle{plain}{
+    \fancyhf[FC]{\footnotesize -- \thepage \ --}
+    \fancyhf[FL,FR,HL,HC,HR]{}
     \renewcommand{\headrulewidth}{0pt}
   }
   \pagestyle{fancy}
@@ -309,8 +188,6 @@
     \IfStrEq{\gifdraft}{1}{\ --- Draft (\gModDate)}{} \hspace{1px}}
   
   \fancyhf[FL,FC,FR,HC]{}
-  
-  \fi
 
   %%% Table of contents %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -411,23 +288,25 @@
   } \newcommand{\gPreprint}{\csuse{setgPreprint}}
   \newcommand{\gPreprintSwitch}{\csuse{setgPreprint-switch}}
 
-  \newcommand\g@getAuthors{
-    \begin{symbolfootnotes}
-      \newcommand{\theauthorsm}{\numexpr \theauthors - 1 \relax}
-      \foreach \index in {1, ...,\theauthors}{%
-        \mbox{\textbf{\getauthor{\index}{name}}%
-          {\ifnum\index=\theauthors{}\else{\ifnum\index=\theauthorsm{}\else{,}\fi}\fi}}%
-        \IfStrEq{\getauthor{\index}{note}}{}{}{\footnote{\getauthor{\index}{note}}}%
-        \textsuperscript{\getauthor{\index}{affil}}
-        \ifnum\index=\theauthorsm\textbf{and~}\fi%
-      }\par%
-    \end{symbolfootnotes}%
-  }
+  \newcommand\g@generateauthors{
+      \begin{symbolfootnotes}
+        \newcommand{\theauthorsm}{\numexpr \theauthors - 1 \relax}
+        \foreach \index in {1, ...,\theauthors}{%
+          \mbox{\textbf{\getauthor{\index}{name}}%
+            {\ifnum\index=\theauthors{}\else{\ifnum\index=\theauthorsm{}\else{,}\fi}\fi}}%
+          \IfStrEq{\getauthor{\index}{note}}{}{}{\footnote{\getauthor{\index}{note}}}%
+          \textsuperscript{\getauthor{\index}{affil}}
+          \ifnum\index=\theauthorsm\textbf{and~}\fi%
+        }\par%
+      \end{symbolfootnotes}%
 
-  \newcommand\g@getAffiliations{
-    \foreach \index in {1, ..., \theaffils}{
-      \textsuperscript{\csuse{affil-id\index}}\csuse{affil-name\index} \par
-    }
+      \if\theaffils0\else
+      \setlength{\leftskip}{1em}%
+      \foreach \index in {1, ..., \theaffils}{
+        \textsuperscript{\csuse{affil-id\index}}\csuse{affil-name\index} \par
+      }
+      \setlength{\leftskip}{0em}%
+      \fi
   }
   
   \if\g@switch@maketitlemod1
@@ -465,14 +344,8 @@
       \else
       \vspace{1em}
       \fi
-      \g@getAuthors%
+      \g@generateauthors%
 
-      \if\theaffils0\else
-      \setlength{\leftskip}{1em}%
-      \g@getAffiliations%
-      \setlength{\leftskip}{0em}%
-      \fi
-      
       \if\csuse{author-email-switch}1
       \blfootnote{\raggedright%
         E-mail:
@@ -566,7 +439,12 @@
     \definecolor{DPurple}{RGB}{126,49,123}
 
     \usetheme{default}
-    
+
+    \setbeamercolor{title}{fg=white}
+    \setbeamerfont{title}{family=\rmfamily, series=\bfseries}
+    \setbeamercolor{author}{fg=white}
+    \setbeamerfont{author}{series=\bfseries}
+    \setbeamercolor{institute}{fg=white}
     \setbeamercolor{date}{fg=white}
     \setbeamerfont{date}{series=\bfseries}
     \setbeamercolor{frametitle}{fg=white}
@@ -576,13 +454,12 @@
     \setbeamertemplate{itemize items}[default]
     \setbeamertemplate{enumerate items}[default]
     \setbeamercolor{local structure}{fg=DPurple}
-
-    \setbeamertemplate{blocks}[rounded][shadow=false]
-    \setbeamercolor{block title}{bg=DPurple,fg=white}
-    \setbeamercolor{block body}{bg=DPurple!30,fg=black}
     
+    % ----This puts the Durham logo on every page
     \setbeamertemplate{background}{%
+      Hello
       \ifnum\c@framenumber=1%
+      Akash Jain
       \begin{picture}(10,265)(-10,0)
 	\includegraphics[width=20mm]{logounidurham-new.png}
       \end{picture}
@@ -592,6 +469,7 @@
       \end{picture}
       \fi%
     }
+    % ----
 
     \setbeamertemplate{title page}{%
       \begin{tikzpicture}[remember picture,overlay]
@@ -599,30 +477,30 @@
 	([yshift=-100pt]current page.west) rectangle (current page.north east);
 	\node[anchor=east]
   	at ([yshift= 20pt,xshift=-20pt]current page.east) (title)
-  	{\parbox[t]{.9\paperwidth}{\raggedleft
-            \textcolor{white}{\LARGE\bfseries\inserttitle}
-            \ifx\insertsubtitle\empty
-            \else
-            \vspace{5pt}
-            \textcolor{white}{\large\insertsubtitle}
-            \fi
-            
-            \vspace{3ex}
-            \textcolor{white}{\rule{\textwidth}{1pt}}
-            \vspace{5ex}
-
-            \textcolor{white}{\large\g@getAuthors}
-            \vspace{3ex}
-            \textcolor{white}{\g@getAffiliations}
-
-            \vspace{5ex}
-            \textcolor{white}{\insertdate}
-            
-          }};
+  	{\parbox[t]{.9\paperwidth}{\raggedleft\textcolor{white}{
+              {\usebeamerfont{title}{\inserttitle}} \\
+              \ifx\insertsubtitle\empty
+              \else
+              \vspace{5pt}
+              {\usebeamerfont{subtitle}{\insertsubtitle}} \\
+              \fi
+              \vspace{5pt}
+              \rule{0.8\paperwidth}{.1pt} \\
+              \vspace{12pt}
+              {\usebeamerfont{author}{%
+                  \g@generateauthors
+                }} \ \\
+              \vspace{15pt}
+% 		{\usebeamerfont{institute}{\insertinstitute} \\ \ } \\
+% 		\vspace{10pt}
+% 		{\usebeamerfont{date}{\insertdate} \\ \ } \\
+%                 \vspace{10pt}
+%                 {\usebeamerfont{institute}{\gReferences}}
+            }}};
   	\node[anchor=east]
   	at ([yshift= 20pt,xshift=-20pt]current page.south east) (title)
   	{\parbox[t]{.8\paperwidth}{\raggedleft\textcolor{black}{
-              {\insertvenue}
+              \small{\insertvenue}
             }}};
       \end{tikzpicture}
     }
@@ -635,11 +513,11 @@
 	\node[anchor=west]
 	at ([yshift= -15pt,xshift= 3pt]current page.north west) (title)
 	{\parbox[t]{\textwidth}{
-            {\bfseries\rmfamily\raggedright\insertframetitle} \par
+            {\raggedright\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}{\insertframetitle}} \par
             \ifx\insertframesubtitle\@empty%
             \else%
             \vspace{-0.3em}
-            {\raggedright\insertframesubtitle}
+            {\raggedright\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\insertframesubtitle}}
             \fi%
           }};
       \end{tikzpicture}

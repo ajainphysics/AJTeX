@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{ajtex-defs}[2017/02/16 Article/Book Styling Package by Akash Jain]
+\ProvidesPackage{ajtex-pkgs}[2017/02/16 Article/Book Styling Package by Akash Jain]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Package Options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,7 +24,6 @@
 %\DeclareVoidOption{nostyling}{\renewcommand{\gstyling}{0}}
 
 % show comments
-\providecommand{\gshowcomments}{0}
 \renewcommand{\gshowcomments}{0}
 \DeclareVoidOption{showcomments}{\renewcommand{\gshowcomments}{1}}
 

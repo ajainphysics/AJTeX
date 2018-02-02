@@ -69,7 +69,7 @@
 \RequirePackage{microtype}
 \RequirePackage[pangram]{blindtext} % Fake placeholder text
 
-% \RequirePackage[sc,slantedGreek]{mathpazo} % osf
+\RequirePackage[sc,slantedGreek]{mathpazo} % osf
 
 %%% TEXT HIGHLIGHTING %%%
 \RequirePackage{soul} % adds highlighting

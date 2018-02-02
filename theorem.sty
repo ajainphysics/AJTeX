@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  %%% Theorem styles %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+  \RequirePackage{mathtools}
+  \RequirePackage[hyperref,thmmarks,amsmath]{ntheorem}
+
+  % definition
+  \theoremstyle{plain}
+  \theoremheaderfont{\hspace{-.3cm}\normalfont\bfseries}
+  \theorembodyfont{\upshape}
+  \theoremsymbol{}
+  \theoremseparator{.}
+  \theoremindent0.3cm
+  \theorempreskip{0.5cm}
+  \theorempostskip{0.3cm}
+  \IfStrEq{\gclass}{book}{\newtheorem{definition}{Definition}[chapter]}{\newtheorem{definition}{Definition}[section]}
+
+  % theorem
+  \theoremclass{definition}
+  \IfStrEq{\gclass}{book}{\newtheorem{theorem}{Theorem}[chapter]}{\newtheorem{theorem}{Theorem}[section]}
+
+  % example
+  \theoremclass{definition}
+  \IfStrEq{\gclass}{book}{\newtheorem{example}{Example}[chapter]}{\newtheorem{example}{Example}[section]}
+
+  % lemma
+  \theoremclass{definition} \newtheorem{lemma}[theorem]{Lemma}
+
+  % proposition
+  \theoremclass{definition} \newtheorem{proposition}[theorem]{Proposition}
+
+  % corollary
+  \theoremclass{definition} \theoremindent0.5cm \theorempreskip{0.2cm}
+  \newtheorem{corollary}{Corollary}[theorem]
+
+  % remark
+  \theoremclass{definition} \theoremstyle{nonumberplain} \theoremindent0.5cm \theorempreskip{0.2cm}
+  \newtheorem{remark}{Remark}
+
+  % remark
+  \theoremclass{remark} \newtheorem{phyremark}{Physicists' Remark}
+
+  % proof
+  \theoremstyle{nonumberplain} \theoremheaderfont{\hspace{-.3cm}\sc} \theorembodyfont{\upshape}
+  \theoremsymbol{$\square$} \theoremseparator{:} \theoremindent0.5cm \theorempreskip{0.2cm}
+  \theorempostskip{0.3cm} \newtheorem{proof}{Proof}
