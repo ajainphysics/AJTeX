@@ -12,13 +12,13 @@
    (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
    (TeX-run-style-hooks
     "kvoptions"
+    "xcolor"
     "xstring"
     "inputenc"
     "fontenc"
     "microtype"
     "blindtext"
     "soul"
-    "xcolor"
     "hyperref"
     "helvet"
     "parskip"
@@ -49,10 +49,10 @@
     "tabularx"
     "multirow"
     "datetime"
-    "geometry"
     "titlesec"
     "fancyhdr"
     "tocloft"
+    "tikz"
     "verbatim"
     "framed"
     "natbib"
@@ -62,29 +62,28 @@
    (TeX-add-symbols
     '("venue" ["argument"] 1)
     '("affiliation" ["argument"] 1)
-    '("bsss" 1)
-    '("bref" 1)
-    '("ket" 1)
-    '("bra" 1)
-    '("Ad" 1)
-    '("Tr" 1)
-    '("E" 1)
-    '("norm" 1)
-    '("Rmnum" 1)
-    '("rmnum" 1)
-    '("doubt" 1)
-    '("brfrac" 2)
-    '("bfrac" 2)
     '("beabox" 1)
     '("beebox" 1)
-    '("widefbox" 1)
     '("bee" 1)
     '("bem" 1)
     '("bea" 1)
+    '("bsss" 1)
+    '("Ad" 1)
+    '("Tr" 1)
+    '("ket" 1)
+    '("bra" 1)
+    '("E" 1)
+    '("norm" 1)
+    '("doubt" 1)
+    '("brfrac" 2)
+    '("bfrac" 2)
+    '("widefbox" 1)
     '("newquotemacro" 1)
+    '("bref" 1)
     '("bibresources" 1)
     '("addbibresources" 1)
     '("references" 1)
+    '("setlogo" 1)
     '("getauthor" 2)
     '("authornote" 1)
     '("preprint" 1)
@@ -94,15 +93,8 @@
     '("footrulecolor" 1)
     '("headrulecolor" 1)
     '("shortyear" 1)
-    "aj"
-    "gheadertitle"
-    "gifdraft"
-    "gnotitlepage"
-    "gnolistofcontents"
-    "gshowcomments"
-    "gafourpaper"
-    "gbasic"
     "gclass"
+    "aj"
     "gModDate"
     "gModDateLong"
     "getAuthors"
@@ -123,16 +115,10 @@
     "quarter"
     "sep"
     "nn"
-    "ben"
-    "een"
-    "be"
-    "ee"
     "dbrk"
     "tbrk"
     "qbrk"
     "dsp"
-    "bc"
-    "ec"
     "BT"
     "grad"
     "lie"
@@ -165,7 +151,6 @@
     "Q"
     "X"
     "Z"
-    "ms"
     "fa"
     "fb"
     "fc"
@@ -192,20 +177,6 @@
     "fx"
     "fy"
     "fz"
-    "sech"
-    "csch"
-    "sgn"
-    "im"
-    "id"
-    "rank"
-    "nul"
-    "Diff"
-    "End"
-    "GL"
-    "SL"
-    "SO"
-    "SU"
-    "diag"
     "ra"
     "Ra"
     "nra"
@@ -219,7 +190,14 @@
     "ld"
     "rd"
     "f"
+    "ms"
     "sss"
+    "ben"
+    "een"
+    "be"
+    "ee"
+    "bc"
+    "ec"
     "blfootnote")
    (LaTeX-add-environments
     "symbolfootnotes"
@@ -230,9 +208,9 @@
     "affils"
     "defcounter")
    (LaTeX-add-xcolor-definecolors
+    "defaultthemecolor"
     "gray75"
     "DBlack"
-    "DPurple"
     "shadecolor"))
  :latex)
 

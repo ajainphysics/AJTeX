@@ -7,7 +7,7 @@
 %%% article and book document classes.                 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{ajtex}[2017/02/16 Article/Book Styling Package by Akash Jain]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -15,44 +15,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \RequirePackage{kvoptions}
+\RequirePackage{xcolor}
 
-\SetupKeyvalOptions{family=ajtex,prefix=ajtex@}
+\SetupKeyvalOptions{family=ajtex,prefix=aj@opt@}
 \DeclareStringOption[1]{version}[latest]
 
 %%% No styling
-\newcommand*\aj@opt@styling{1}
-\DeclareVoidOption{nostyling}{\renewcommand\aj@opt@styling{0}}
 
-\newcommand{\aj@opt@legacy}{0}
-\DeclareVoidOption{legacy}{\renewcommand{\aj@opt@legacy}{1}}
+\DeclareBoolOption[true]{styling}
+\DeclareComplementaryOption{nostyling}{styling}
 
-% put title in headers instead of section
-\newcommand{\gheadertitle}{0}
-\DeclareVoidOption{headertitle}{\renewcommand{\gheadertitle}{1}}
+\DeclareBoolOption{legacy} % Enable the legacy command set
+\DeclareBoolOption{headertitle} % Put title in the header
 
-% draft
-\newcommand{\gifdraft}{0}
-\DeclareVoidOption{draft}{\renewcommand{\gifdraft}{1}}
+\DeclareBoolOption{draft} % Draft mode
+\DeclareComplementaryOption{final}{draft}
 
-% no title page
-\newcommand{\gnotitlepage}{0}
-\DeclareVoidOption{notitlepage}{\renewcommand{\gnotitlepage}{1}}
+\DeclareBoolOption[true]{titlepage} % Title page switch
+\DeclareComplementaryOption{notitlepage}{titlepage}
 
-% no list of contents
-\newcommand{\gnolistofcontents}{0}
-\DeclareVoidOption{nolistofcontents}{\renewcommand{\gnolistofcontents}{1}}
+\DeclareBoolOption[true]{listofcontents} % List of contents switch
+\DeclareComplementaryOption{nolistofcontents}{listofcontents}
 
-% show comments
-\newcommand{\gshowcomments}{0}
-\DeclareVoidOption{showcomments}{\renewcommand{\gshowcomments}{1}}
+\DeclareBoolOption{basic} % Basic switch
+\DeclareBoolOption{showcomments} % Show comments
 
-% use US Letter layout
-\newcommand{\gafourpaper}{0}
-\DeclareVoidOption{a4paper}{\renewcommand{\gafourpaper}{1}}
+\DeclareStringOption[letterpaper]{paper}
+\DeclareVoidOption{a4paper}{\renewcommand{\aj@opt@paper}{a4paper}}
+\DeclareVoidOption{letterpaper}{\renewcommand{\aj@opt@paper}{letterpaper}}
 
-% basic start
-\newcommand{\gbasic}{0}
-\DeclareVoidOption{basic}{\renewcommand{\gbasic}{1}}
+\definecolor{defaultthemecolor}{RGB}{126,49,123}
+\DeclareStringOption[defaultthemecolor]{themecolor}
 
 %%% Document Class
 \newcommand{\gclass}{article}
@@ -76,7 +69,6 @@
 \newcommand\aj@switch@maketitlemod{1} % \maketitle modifications
 \newcommand\aj@switch@headermod{1} % \headermodifications
 \newcommand\aj@switch@beamermod{0} % \headermodifications
-\newcommand\aj@switch@styling{\aj@opt@styling}
 
 \IfStrEq{\gclass}{beamer}{
   \renewcommand\aj@switch@tocmod{0}
@@ -88,7 +80,7 @@
   \renewcommand\aj@switch@beamermod{1}
 }
 
-\if\aj@switch@styling0
+\ifaj@opt@styling\else
 \renewcommand\aj@switch@tocmod{0}
 \renewcommand\aj@switch@titlesecmod{0}
 \renewcommand\aj@switch@geometrymod{0}
@@ -111,14 +103,11 @@
 %%% TEXT HIGHLIGHTING %%%
 \RequirePackage{soul} % adds highlighting
 
-%%% TEXT COLOURS %%%
-\RequirePackage{xcolor}
-
 \@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}} % for hyper links 
 
 %%% Conditionals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if\aj@switch@styling1 % Only load if styling is turned on
+\ifaj@opt@styling % Only load if styling is turned on
 
 \RequirePackage{helvet} % helvet font package
 
@@ -169,7 +158,7 @@
 
 %%% Conditionals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if\aj@switch@styling1 % Only load if styling is turned on
+\ifaj@opt@styling % Only load if styling is turned on
 
 \IfStrEq{\gclass}{article}{\numberwithin{equation}{section}}{}
 \IfStrEq{\gclass}{book}{\numberwithin{equation}{chapter}}{}
@@ -187,7 +176,6 @@
 %%% Graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\RequirePackage{tikz} % conditional load when needed
 \RequirePackage{graphicx} % support the \includegraphics command and options
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,15 +199,17 @@
 %%% Date and time %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if\aj@switch@styling1 % Only load if styling is turned on
+\ifaj@opt@styling % Only load if styling is turned on
 
 \RequirePackage{datetime}
 \newcommand*\shortyear[1]{\expandafter\@gobbletwo\number\numexpr#1\relax}
 \newdateformat{smalldate}{\THEDAY~\shortmonthname[\THEMONTH]'\shortyear{\THEYEAR}}
-\IfStrEq{\gifdraft}{1}{
-  \newcommand{\gModDate}{{\smalldate\today}, \currenttime}
-  \newcommand{\gModDateLong}{\today~at~\currenttime}
-}{}
+
+\ifaj@opt@draft
+\newcommand{\gModDate}{{\smalldate\today}, \currenttime}
+\newcommand{\gModDateLong}{\today~at~\currenttime}
+\fi
+
 \usdate%
 
 \fi %\aj@switch@styling1
@@ -230,11 +220,8 @@
 
 \if\aj@switch@geometrymod1 % Dedicated switch
 
-\RequirePackage{geometry} % to change the page dimensions
-\IfStrEq{\gafourpaper}{1}{\geometry{a4paper}}{\geometry{letterpaper}} % paper
-% layout
-
 \geometry{
+  \aj@opt@paper,
   margin=1in,
   tmargin=1.2in,
   footskip=0.2in,
@@ -279,12 +266,12 @@
 \RequirePackage{titlesec} % for changing title styles
 
 \IfStrEq{\gclass}{article}{
-  \if\gbasic0
-  \titleformat{\section}[hang]{\Large\bfseries}{\thesection\hspace{10pt}
-    \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\Large\bfseries}[\vspace{1ex}\titlerule]
-  \else
+  \ifaj@opt@basic
   \titleformat{\section}[hang]{\vspace{-1ex} \large\bfseries}{\thesection \hspace{10pt}
     \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\large\bfseries}[\vspace{0.5ex}\titlerule]
+  \else
+  \titleformat{\section}[hang]{\Large\bfseries}{\thesection\hspace{10pt}
+    \textcolor{gray75}{$\vert$} \hspace{10pt}}{0pt}{\Large\bfseries}[\vspace{1ex}\titlerule]
   \fi
 }{}
 
@@ -339,16 +326,22 @@
 }
 \pagestyle{fancy}
 
-\fancyhf[HLO]{\footnotesize \hspace{1px}
-  \IfStrEq{\gheadertitle}{1}{\gTitle}{\nouppercase\rightmark}
-  \IfStrEq{\gifdraft}{1}{\ --- Draft (\gModDate)}{}}
+\fancyhf[HLO]{
+  \footnotesize \hspace{1px}
+  \ifaj@opt@headertitle\gTitle\else\nouppercase\rightmark\fi
+  \ifaj@opt@draft\ --- Draft (\gModDate)\fi
+}
+
 \fancyhf[HRO]{\footnotesize \textcolor{gray75}{\bfseries
     $\vert$ \hspace{2px}} \thepage\hspace{1px}\ }
 
-\fancyhf[HLE]{\footnotesize \hspace{1px} \thepage
+\fancyhf[HLE]{\footnotesize \hspace{1px}\thepage%
   \textcolor{gray75}{\bfseries \hspace{2px} $\vert$}}
-\fancyhf[HRE]{\footnotesize \nouppercase \leftmark
-  \IfStrEq{\gifdraft}{1}{\ --- Draft (\gModDate)}{} \hspace{1px}}
+\fancyhf[HRE]{
+  \footnotesize \nouppercase\leftmark%
+  \ifaj@opt@draft\ --- Draft (\gModDate)\fi
+  \hspace{1px}
+}
 
 \fancyhf[FL,FC,FR,HC]{}
 
@@ -373,7 +366,7 @@
 %%% Footnotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if\aj@switch@styling1 % Only load if styling is turned on
+\ifaj@opt@styling % Only load if styling is turned on
 
 \def\@xfootnote[#1]{
   \protected@xdef\@thefnmark{#1} \@footnotemark\@footnotetext
@@ -410,7 +403,7 @@
 \newcommand{\getAbstract}{\aj@abstract}
 
 
-\if\aj@switch@styling1 % Only load if styling is turned on
+\ifaj@opt@styling % Only load if styling is turned on 
 
 %%% Store abstract
 \newcommand\aj@abstract{}
@@ -508,17 +501,17 @@
     {\raggedleft\aj@preprint}
   \end{flushright}
   \vspace{6em}
-  \IfStrEq{\gnotitlepage}{1}{\vspace{-2em}}{}
-  \IfStrEq{\gbasic}{1}{\vspace{-2em}}{}
+  \ifaj@opt@titlepage\else\vspace{-2em}\fi
+  \ifaj@opt@basic\vspace{-2em}\fi
   \fi
-  
-  \if\gbasic0
-  {\raggedright \bfseries \huge \@title \par}
-  \vspace{2em}
-  \else
+
+  \ifaj@opt@basic
   \ \vspace{-4em} \\
   {\raggedright \bfseries \LARGE \@title \par}
   \vspace{1em}
+  \else
+  {\raggedright \bfseries \huge \@title \par}
+  \vspace{2em}
   \fi
   
   \hrule height 1.5pt
@@ -526,12 +519,9 @@
   % authors and affiliation
   \IfStrEq{\theauthors}{0}{}{
     {\raggedright
+
+      \ifaj@opt@basic\vspace{1em}\else\vspace{2em}\fi
       
-      \if\gbasic0
-      \vspace{2em}
-      \else
-      \vspace{1em}
-      \fi
       \g@getAuthors%
 
       \if\theaffils0\else
@@ -577,30 +567,28 @@
   %   \par%
   % }%
 
-  \IfStrEq{\gifdraft}{1}{
-    \titlefield{Drafted}{\gModDateLong}
-  }{
-    \titlefield{Dated}{\getDate}
-  }
+  \ifaj@opt@draft
+  \titlefield{Drafted}{\gModDateLong}
+  \else
+  \titlefield{Dated}{\getDate}
+  \fi
 
-  \IfStrEq{\gbasic}{1}{}{
-    \titlefield{Comments}{%
-      \IfStrEq{\gnotitlepage}{1}{%
-        \iftotalpages\totalpages~pages,~\fi%
-      }{%
-        \iftotalpages\FPeval{\totalpagesminusone}{clip(\totalpages - 1)}$\totalpagesminusone+1$~pages,~\fi%
-      }
-      \iftotalfigures\totalfigures~figures,~\fi%
-      \iftotaltables\totaltables~tables,~\fi%
-      \LaTeX%
-    }
+  \ifaj@opt@basic\else
+  \titlefield{Comments}{%
+    \ifaj@opt@titlepage
+    \iftotalpages\FPeval{\totalpagesminusone}{clip(\totalpages - 1)}$\totalpagesminusone+1$~pages,~\fi%
+    \else
+    \iftotalpages\totalpages~pages,~\fi%
+    \fi
+    \iftotalfigures\totalfigures~figures,~\fi%
+    \iftotaltables\totaltables~tables,~\fi%
+    \LaTeX%
   }
+  \fi
 
   \if\thetitlefields0\else
   \foreach \index in {1, ...,\thetitlefields}{%
-    \if\gbasic0
-    \vspace{1em}
-    \fi
+    \ifaj@opt@basic\else\vspace{1em}\fi
     
     {%
       \hspace{-1em}%
@@ -615,14 +603,11 @@
   \setlength{\leftskip}{0em}%
   
   % page-break
-  \IfStrEq{\gnotitlepage}{1}{}{\IfStrEq{\gbasic}{1}{}{\newpage}}
+  \ifaj@opt@titlepage\ifaj@opt@basic\else\newpage\fi\fi
   
   % table of contents
-  \IfStrEq{\gnolistofcontents}{1}{}{
-    \IfStrEq{\gbasic}{1}{}{
-      \tableofcontents
-    }
-  }
+  \ifaj@opt@listofcontents\ifaj@opt@basic\else\tableofcontents\fi\fi
+  
   \flushbottom
 
   \vspace{1em}
@@ -636,8 +621,14 @@
 
 \if\aj@switch@beamermod1 % Dedicated switch
 
+\RequirePackage{tikz} % conditional load when needed
+
 \definecolor{DBlack}{RGB}{35,31,32}
-\definecolor{DPurple}{RGB}{126,49,123}
+
+\setlist[itemize]{
+  label={\textcolor{\aj@opt@themecolor}{$\blacktriangleright$}},
+  leftmargin=*
+}
 
 \usetheme{default}
 
@@ -649,27 +640,30 @@
 \setbeamerfont{framesubtitle}{family=\sffamily}
 \setbeamertemplate{itemize items}[default]
 \setbeamertemplate{enumerate items}[default]
-\setbeamercolor{local structure}{fg=DPurple}
+\setbeamercolor{local structure}{fg=\aj@opt@themecolor}
 
 \setbeamertemplate{blocks}[rounded][shadow=false]
-\setbeamercolor{block title}{bg=DPurple,fg=white}
-\setbeamercolor{block body}{bg=DPurple!30,fg=black}
+\setbeamercolor{block title}{bg=\aj@opt@themecolor,fg=white}
+\setbeamercolor{block body}{bg=\aj@opt@themecolor!30,fg=black}
+
+\newcommand*\aj@logo{logo.png}
+\newcommand*\setlogo[1]{\renewcommand*\aj@logo{#1}}
 
 \setbeamertemplate{background}{%
   \ifnum\c@framenumber=1%
   \begin{picture}(10,265)(-10,0)
-    \includegraphics[width=20mm]{logounidurham-new.png}
+    \includegraphics[width=20mm]{\aj@logo}
   \end{picture}
   \else%
   \begin{picture}(35,270)(-5,0)
-    \includegraphics[width=15mm]{logounidurham-new.png}
+    \includegraphics[width=15mm]{\aj@logo}
   \end{picture}
   \fi%
 }
 
 \setbeamertemplate{title page}{%
   \begin{tikzpicture}[remember picture,overlay]
-    \fill[DPurple]
+    \fill[\aj@opt@themecolor]
     ([yshift=-100pt]current page.west) rectangle (current page.north east);
     \node[anchor=east]
     at ([yshift= 20pt,xshift=-20pt]current page.east) (title)
@@ -704,7 +698,7 @@
 \setbeamertemplate{frametitle}
 {%
   \begin{tikzpicture}[remember picture,overlay]
-    \fill[DPurple]
+    \fill[\aj@opt@themecolor]
     ([yshift=108pt]current page.west) rectangle (current page.north east);
     \node[anchor=west]
     at ([yshift= -15pt,xshift= 3pt]current page.north west) (title)
@@ -756,23 +750,24 @@
 
 \newcounter{defcounter}
 \newenvironment{comments} {%
-  \IfStrEq{\gshowcomments}{0}{\expandafter\comment}{
-    \begin{shaded}
-      \global\chardef\dc@currentequation=\value{equation}%
-      \let\c@equation\c@defcounter
-      \IfStrEq{\gclass}{book}{
-        \renewcommand{\theequation}{\thechapter.\%.\arabic{equation}}
-      }{
-        \renewcommand{\theequation}{\thesection.\%.\arabic{equation}}
-      }
-      % comment the following line if you don't use hyperref
-      \renewcommand{\theHequation}{\theequation}%
-      \textbf{Comments:}%
-    }%
-  } {%
-    \IfStrEq{\gshowcomments}{0}{\expandafter\endcomment}{
-    \end{shaded}
-    \setcounter{equation}{\dc@currentequation} }%
+  \ifaj@opt@showcomments
+  \begin{shaded}
+    \global\chardef\dc@currentequation=\value{equation}%
+    \let\c@equation\c@defcounter
+    \IfStrEq{\gclass}{book}{
+      \renewcommand{\theequation}{\thechapter.\%.\arabic{equation}}
+    }{
+      \renewcommand{\theequation}{\thesection.\%.\arabic{equation}}
+    }
+    % comment the following line if you don't use hyperref
+    \renewcommand{\theHequation}{\theequation}%
+    \textbf{Comments:}%
+    \else\expandafter\comment\fi
+  }{%
+    \ifaj@opt@showcomments
+  \end{shaded}
+  \setcounter{equation}{\dc@currentequation}
+  \else\expandafter\endcomment\fi
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -817,7 +812,7 @@
 
 %%% Conditionals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\if\aj@switch@styling1
+\ifaj@opt@styling
 
 \renewcommand*{\bibfont}{\small}
   
@@ -836,6 +831,8 @@
 \crefname{appendix}{appendix}{appendices}
 \crefname{figure}{figure}{figures}
 \crefname{table}{table}{tables}
+
+\newcommand\bref[1]{(\ref{#1})}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%% Acknowledgements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -870,8 +867,6 @@
 
 \RequirePackage[Symbolsmallscale]{upgreek}
 \RequirePackage{xstring} % For string conditionals
-
-\RequirePackage{cleveref}
 
 %%% " macro %%%
 
@@ -908,21 +903,7 @@
 
 \newcommand{\nn}{\nonumber}
 
-\newcommand{\ben}{\begin{eqnarray}\displaystyle}
-\newcommand{\een}{\end{eqnarray}}
-
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-
-\newcommand{\bea}[1]{\begin{align}#1\end{align}}
-\newcommand{\bem}[1]{\begin{multline}#1\end{multline}}
-\newcommand{\bee}[1]{\begin{equation}#1\end{equation}}
-
 \newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
-
-\newcommand{\beebox}[1]{\begin{empheq}[box=\widefbox]{equation}#1\end{empheq}}
-\newcommand{\beabox}[1]{\begin{empheq}[box=\widefbox]{align}#1\end{empheq}}
-
 
 \newcommand{\dbrk}{\right. \\ \left.}
 \newcommand{\tbrk}{\right. \right. \\ \left. \left.}
@@ -934,16 +915,8 @@
 
 \newcommand{\doubt}[1]{\hl{\textbf{Doubt:} #1}}
 
-%% Text Commands
-
-\newcommand{\bc}{\begin{center}}
-\newcommand{\ec}{\end{center}}
-
 %% Math Symbols
 
-\newcommand{\rmnum}[1]{\romannumeral #1}
-\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
-%\newcommand{\qed}{\begin{flushright} \ensuremath{\Box} \end{flushright}}
 \newcommand{\norm}[1]{|\!| #1 |\!|}
 \newcommand{\BT}{\blacktriangle}
 
@@ -959,58 +932,34 @@
 \newquotemacro{dow}{\partial}
 
 %% Symbol Shortcuts
-\renewcommand{\a}{\alpha}	%%% Redefinition
-\renewcommand{\b}{\beta}	%%% Redefinition
-\renewcommand{\c}{\chi}		%%% Redefinition
-\renewcommand{\d}{\delta}	%%% Redefinition
 \newcommand{\e}{\epsilon}
 \newcommand{\ve}{\varepsilon}
-%\newcommand{\f}{\phi}
 \newcommand{\vf}{\varphi}
 \newcommand{\g}{\gamma}
 \newcommand{\h}{\hbar}
 \newcommand{\hs}{\hslash}
-\renewcommand{\i}{\iota}		%%% Redefinition
-%\renewcommand{\j}{}
-\renewcommand{\k}{\kappa}	%%% Redefinition
-%\renewcommand{\l}{\lambda}	%%% Redefinition
-\newcommand{\m}{\mu}								%%% Useless
-\newcommand{\n}{\nu}								%%% Useless
-\renewcommand{\o}{\omega}	%%% Redefinition
-\newcommand{\p}{\psi}								%%% Useless
-\newcommand{\vp}{\varpi}							%%% Useless
+\newcommand{\m}{\mu} %%% Useless
+\newcommand{\n}{\nu} %%% Useless
+\newcommand{\p}{\psi} %%% Useless
+\newcommand{\vp}{\varpi} %%% Useless
 \newcommand{\q}{\theta}	
 \newcommand{\vq}{\vartheta}	
-\renewcommand{\r}{\rho}		%%% Redefinition
-%\newcommand{\vr}{\varrho}	%%% Redefinition
 \newcommand{\s}{\sigma}
 \newcommand{\vs}{\varsigma}
-\renewcommand{\t}{\tau}		%%% Redefinition
-\renewcommand{\u}{\upsilon}	%%% Redefinition
-%\renewcommand{\v}{}
-%\newcommand{\w}{}
-\newcommand{\x}{\xi}								%%% Useless
-%\renewcommand{\y}{}
+\newcommand{\x}{\xi} %%% Useless
 \newcommand{\z}{\zeta}
 
 \newcommand{\A}{\forall}
 \newcommand{\B}{\Box}
-%\newcommand{\C}{\mathbb{C}}
-%\newcommand{\D}{\Delta}
 \newcommand{\E}[1]{\mathrm{e}^{#1}}
 \newcommand{\F}{\Phi}
 \newcommand{\G}{\Gamma}
 \newcommand{\I}{\infty}
-\renewcommand{\L}{\Lambda}	%%% Redefinition
 \newcommand{\M}{\mho}
 \newcommand{\N}{\nabla}
-\renewcommand{\O}{\Omega}	%%% Redefinition
-\renewcommand{\P}{\Psi}		%%% Redefinition		%%% Useless
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\Theta}
-%\renewcommand{\S}{\Sigma}
-%\newcommand{\U}{\Upsilon}
-\newcommand{\X}{\Xi}								%%% Useless
+\newcommand{\X}{\Xi} %%% Useless
 \newcommand{\Z}{\mathcal{Z}}
 
 %%% " small alphabets
@@ -1036,7 +985,7 @@
 \newquotemacro{s}{\sigma}  \newquotemacro{vs}{\varsigma}
 \newquotemacro{t}{\tau}
 \newquotemacro{u}{\upsilon}
-%\newquotemacro{\v}{}
+%\newquotemacro{v}{}
 \newquotemacro{w}{\omega} % alias of "o
 \newquotemacro{x}{\xi}
 \newquotemacro{y}{\psi}
@@ -1075,7 +1024,7 @@
 
 \RequirePackage{xparse}
 
-\ExplSyntaxOn
+\ExplSyntaxOn%
 
 \clist_map_inline:nn{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
 {
@@ -1119,9 +1068,7 @@
   
   \newquotemacro{f#1}{\mathfrak{#1}} % e.g. "fa -> \mathfrak{a}
 }
-\ExplSyntaxOff
-
-\newcommand\ms{\mathsmaller}
+\ExplSyntaxOff%
 
 
 \newcommand{\fa}{\mathfrak{a}}
@@ -1154,8 +1101,6 @@
 %% Standard Functions
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\csch}{csch}
-\newcommand{\Tr}[1]{\mathrm{Tr}\lB #1\rB}
-\newcommand{\Ad}[1]{\mathrm{Ad}\lB #1\rB}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\id}{id}
@@ -1185,32 +1130,56 @@
 \newcommand{\ld}{\left.}
 \newcommand{\rd}{\right.}
 
-\newcommand{\bra}[1]{\left\langle #1\right\vert}
-\newcommand{\ket}[1]{\left\vert #1\right\rangle}
-
-\newcommand\bref[1]{(\ref{#1})}
+\newcommand{\bra}[1]{\left\langle#1\right\vert}
+\newcommand{\ket}[1]{\left\vert#1\right\rangle}
 
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
 \renewcommand{\t}{\tau}		%%% Redefinition
 
-\IfStrEq{\aj@opt@legacy}{1}{
+\ifaj@opt@legacy
 %% Symbol Shortcuts
-  \renewcommand{\a}{\alpha}	%%% Redefinition
-  \renewcommand{\b}{\beta}	%%% Redefinition
-  \renewcommand{\c}{\chi}		%%% Redefinition
-  \renewcommand{\d}{\delta}	%%% Redefinition
-  \newcommand{\f}{\phi}
-  \renewcommand{\i}{\iota}	%%% Redefinition
-  \renewcommand{\k}{\kappa}	%%% Redefinition
-  \renewcommand{\l}{\lambda}	%%% Redefinition
-  \renewcommand{\o}{\omega}	%%% Redefinition
-  \renewcommand{\r}{\rho}		%%% Redefinition
-  \renewcommand{\t}{\tau}		%%% Redefinition
-  \renewcommand{\u}{\upsilon}	%%% Redefinition
-  \newcommand{\sss}{\mathsmaller}
-  \newcommand{\bsss}[1]{\bar{\mathsmaller{#1}}}
-}{}
+\renewcommand{\a}{\alpha}	%%% Redefinition
+\renewcommand{\b}{\beta}	%%% Redefinition
+\renewcommand{\c}{\chi}		%%% Redefinition
+\renewcommand{\d}{\delta}	%%% Redefinition
+\newcommand{\f}{\phi}
+\renewcommand{\i}{\iota}	%%% Redefinition
+\renewcommand{\k}{\kappa}	%%% Redefinition
+\renewcommand{\l}{\lambda}	%%% Redefinition
+\renewcommand{\o}{\omega}	%%% Redefinition
+\renewcommand{\r}{\rho}		%%% Redefinition
+\renewcommand{\t}{\tau}		%%% Redefinition
+\renewcommand{\u}{\upsilon}	%%% Redefinition
+
+\renewcommand{\L}{\Lambda}	%%% Redefinition
+\renewcommand{\O}{\Omega}	%%% Redefinition
+\renewcommand{\P}{\Psi}		%%% Redefinition
+
+\newcommand{\Tr}[1]{\mathrm{Tr}\lB#1\rB}
+\newcommand{\Ad}[1]{\mathrm{Ad}\lB#1\rB}
+
+\newcommand\ms{\mathsmaller}
+\newcommand{\sss}{\mathsmaller}
+\newcommand{\bsss}[1]{\bar{\mathsmaller{#1}}}
+
+\newcommand{\ben}{\begin{eqnarray}\displaystyle}
+\newcommand{\een}{\end{eqnarray}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+
+\newcommand{\bea}[1]{\begin{align}#1\end{align}}
+\newcommand{\bem}[1]{\begin{multline}#1\end{multline}}
+\newcommand{\bee}[1]{\begin{equation}#1\end{equation}}
+
+\newcommand{\beebox}[1]{\begin{empheq}[box=\widefbox]{equation}#1\end{empheq}}
+\newcommand{\beabox}[1]{\begin{empheq}[box=\widefbox]{align}#1\end{empheq}}
+
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+
+\fi
 
 
 %%% ajtex.sty ends here
