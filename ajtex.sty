@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \RequirePackage{kvoptions}
-\RequirePackage{xcolor}
+\RequirePackage[dvipsnames]{xcolor}
 
 \SetupKeyvalOptions{family=ajtex,prefix=aj@opt@}
 \DeclareStringOption[1]{version}[latest]
@@ -49,10 +49,35 @@
 
 %%% Document Class
 \newcommand{\gclass}{article}
-\@ifclassloaded{book}{\renewcommand{\gclass}{book}}{}
-\@ifclassloaded{beamer}{\renewcommand{\gclass}{beamer}}{}
-\DeclareVoidOption{cv}{\renewcommand{\gclass}{cv}}
-\DeclareVoidOption{letter}{\renewcommand{\gclass}{letter}}
+
+\newif\ifaj@class@article
+\newif\ifaj@class@book
+\newif\ifaj@class@cv
+\newif\ifaj@class@beamer
+\newif\ifaj@class@letter
+
+\aj@class@articletrue
+\aj@class@bookfalse
+\aj@class@cvfalse
+\aj@class@beamerfalse
+\aj@class@letterfalse
+
+\@ifclassloaded{book}{
+  \renewcommand{\gclass}{book}
+  \aj@class@booktrue
+}{}
+\@ifclassloaded{beamer}{
+  \renewcommand{\gclass}{beamer}
+  \aj@class@beamertrue
+}{}
+\DeclareVoidOption{cv}{
+  \renewcommand{\gclass}{cv}
+  \aj@class@cvtrue
+}
+\DeclareVoidOption{letter}{
+  \renewcommand{\gclass}{letter}
+  \aj@class@lettertrue
+}
 
 \ProcessKeyvalOptions*
 
@@ -103,8 +128,6 @@
 %%% TEXT HIGHLIGHTING %%%
 \RequirePackage{soul} % adds highlighting
 
-\@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}} % for hyper links 
-
 %%% Conditionals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifaj@opt@styling % Only load if styling is turned on
@@ -112,22 +135,31 @@
 \RequirePackage{helvet} % helvet font package
 
 %%% TEXT SPACING %%%
-\RequirePackage[parfill]{parskip} % begin paragraphs with an empty line rather than an indent
+% \RequirePackage[parfill]{parskip} % begin paragraphs with an empty line rather than an indent
+\IfStrEq{\gclass}{cv}{
+  \RequirePackage[parfill]{parskip}
+  %\renewcommand{\baselinestretch}{1}
+}{
+  \setlength{\parskip}{0.5em plus 0.1em minus 0.1em}
+  %\renewcommand{\baselinestretch}{1.1} % line space between different elements
+}
 
-\renewcommand{\baselinestretch}{1.2} % line space between different elements
-\IfStrEq{\gclass}{cv}{\renewcommand{\baselinestretch}{1}}{}
+\fi
 
 %%% HYPERREF %%%
+
+\ifaj@opt@styling % Only load if styling is turned on
+\@ifpackageloaded{hyperref}{}{\RequirePackage{hyperref}} % for hyper links
 
 \hypersetup{
   colorlinks=true, % false: boxed links; true: colored links
   linkcolor=blue, % color of internal links
-  citecolor=red, % color of links to bibliography
+  citecolor=blue, % color of links to bibliography
   filecolor=blue, % color of file links
   urlcolor=blue % color of external links
 }
 
-\fi %\aj@switch@styling1
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Logical packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,7 +174,9 @@
 %%% Math Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ifaj@opt@styling % Only load if styling is turned on
 \RequirePackage[mathscr]{euscript}
+\fi
 
 \RequirePackage{mathtools}
 \RequirePackage{centernot} % provides a centered \not on a symbol
@@ -192,9 +226,6 @@
 \RequirePackage{tabularx} 	% for flexible tables
 \RequirePackage{multirow}	% multiple rows in tables
 
-%%% TEXT HIGHLIGHTING %%%
-\RequirePackage{soul} % adds highlighting
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Date and time %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -220,12 +251,15 @@
 
 \if\aj@switch@geometrymod1 % Dedicated switch
 
+\RequirePackage{geometry} % to change the page dimensions
+
 \geometry{
   \aj@opt@paper,
   margin=1in,
   tmargin=1.2in,
   footskip=0.2in,
-  headsep=0.2in
+  headsep=0.2in,
+  % heightrounded=true
 }
 
 \IfStrEq{\gclass}{cv}{
@@ -246,6 +280,7 @@
 
 \IfStrEq{\gclass}{book}{
   \geometry{
+    \aj@opt@paper,
     margin=20mm,
     tmargin=26mm,
     headsep=4mm,
@@ -328,7 +363,7 @@
 
 \fancyhf[HLO]{
   \footnotesize \hspace{1px}
-  \ifaj@opt@headertitle\gTitle\else\nouppercase\rightmark\fi
+  \ifaj@opt@headertitle\@title\else\nouppercase\rightmark\fi
   \ifaj@opt@draft\ --- Draft (\gModDate)\fi
 }
 
@@ -337,6 +372,7 @@
 
 \fancyhf[HLE]{\footnotesize \hspace{1px}\thepage%
   \textcolor{gray75}{\bfseries \hspace{2px} $\vert$}}
+
 \fancyhf[HRE]{
   \footnotesize \nouppercase\leftmark%
   \ifaj@opt@draft\ --- Draft (\gModDate)\fi
@@ -344,6 +380,25 @@
 }
 
 \fancyhf[FL,FC,FR,HC]{}
+
+\AtBeginDocument{
+  \markboth{\@title}{\@title}
+}
+
+\ifaj@class@book
+\renewcommand{\chaptermark}[1]{
+  \ifnum0<0\thechapter\relax
+  \markboth{Chapter~\thechapter.~#1}{Chapter~\thechapter.~#1}
+  \else
+  \if\thechapter0
+  \markboth{#1}{#1}
+  \else
+  \markboth{\thechapter.~#1}{\thechapter.~#1}
+  \fi
+  \fi
+}
+\fi
+\renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}}
 
 \fi %\aj@switch@headermod1
 
@@ -357,6 +412,12 @@
 \RequirePackage[titles]{tocloft} % Alter the style of the Table of Contents
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%\setlength{\cftbeforechapskip}{1ex} % No chapters
+\setlength{\cftbeforesecskip}{1ex}
+\setlength{\cftbeforesubsecskip}{-0.5ex}
+
+\hypersetup{linktocpage}
 
 \fi %\aj@switch@tocmod1
 
@@ -551,6 +612,7 @@
   {%
     % \hangindent=1em
     % \hangafter=1
+    \noindent
     \hspace{-1em}%
     {\textsc{Abstract:} \aj@abstract}
     \par}%
@@ -570,7 +632,7 @@
   \ifaj@opt@draft
   \titlefield{Drafted}{\gModDateLong}
   \else
-  \titlefield{Dated}{\getDate}
+  \titlefield{Date}{\getDate}
   \fi
 
   \ifaj@opt@basic\else
@@ -580,8 +642,12 @@
     \else
     \iftotalpages\totalpages~pages,~\fi%
     \fi
-    \iftotalfigures\totalfigures~figures,~\fi%
-    \iftotaltables\totaltables~tables,~\fi%
+    \iftotalfigures%
+    \if\totalfigures1\totalfigures~figure,~\else\totalfigures~figures,~\fi%
+    \fi%
+    \iftotaltables%
+    \if\totaltables1\totaltables~table,~\else\totaltables~tables,~\fi%
+    \fi%
     \LaTeX%
   }
   \fi
@@ -591,6 +657,7 @@
     \ifaj@opt@basic\else\vspace{1em}\fi
     
     {%
+      \noindent
       \hspace{-1em}%
       \IfStrEq{\csuse{titlefield\index-title}}{}{}{%
         \textsc{\csuse{titlefield\index-title}}:
@@ -685,6 +752,9 @@
 
         \vspace{5ex}
         \textcolor{white}{\insertdate}
+
+        \vspace{5ex}
+        \textcolor{white}{\gReferences}
         
       }};
     \node[anchor=east]
@@ -761,6 +831,7 @@
     }
     % comment the following line if you don't use hyperref
     \renewcommand{\theHequation}{\theequation}%
+    \noindent
     \textbf{Comments:}%
     \else\expandafter\comment\fi
   }{%
@@ -807,8 +878,10 @@
 
 % \newcommand{\makereferences}{\printbibliography[heading=bibintoc]}
 
+\ifaj@opt@styling % Only load if styling is turned on
 \RequirePackage[numbers,sort&compress]{natbib}
 \RequirePackage{bibentry}
+\fi
 
 %%% Conditionals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -853,7 +926,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\ifaj@opt@styling % Only load if styling is turned on
 \RequirePackage[mathscr]{euscript}
+\fi
 
 \RequirePackage{mathtools}
 \RequirePackage{centernot} % provides a centered \not on a symbol
@@ -1023,6 +1098,7 @@
 %%% Alphabet definitions %%%
 
 \RequirePackage{xparse}
+\RequirePackage{slantsc} % For stylised smallcaps
 
 \ExplSyntaxOn%
 
@@ -1037,8 +1113,11 @@
   \expandafter\def\csname bc#1\endcsname{\bm{\mathcal{#1}}} % e.g. \bcA -> \bm{\mathcal{A}}
   \newquotemacro{bc#1}{\bm{\mathcal{#1}}} % e.g. "bcA -> \bm{\mathcal{A}}
   
-  \expandafter\def\csname s#1\endcsname{{\mathsmaller{#1}}} % e.g. \sA -> {\mathsmaller{A}}
-  \newquotemacro{s#1}{{\mathsmaller{#1}}} % e.g. "sA -> {\mathsmaller{A}}
+  %\expandafter\def\csname s#1\endcsname{{\mathsmaller{#1}}} % e.g. \sA -> {\mathsmaller{A}}
+  %\newquotemacro{s#1}{{\mathsmaller{#1}}} % e.g. "sA -> {\mathsmaller{A}}
+
+  \expandafter\def\csname s#1\endcsname{{\normalfont\textsl{\textsc{\lowercase{#1}}}}} % e.g. \sA -> {\mathsmaller{A}}
+  \newquotemacro{s#1}{{\normalfont\textsl{\textsc{\lowercase{#1}}}}} % e.g. "sA -> {\mathsmaller{A}}
   
   \expandafter\def\csname bb#1\endcsname{\mathbb{#1}} % e.g. \bbA -> \mathbb{A}
   \newquotemacro{bb#1}{\mathbb{#1}} % e.g. "bbA -> \mathbb{A}
@@ -1113,6 +1192,7 @@
 \DeclareMathOperator{\SO}{SO}
 \DeclareMathOperator{\SU}{SU}
 \DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator\tr{tr}
 
 %% Symbols
 \newcommand{\ra}{\rightarrow}
@@ -1136,6 +1216,8 @@
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
 \renewcommand{\t}{\tau}		%%% Redefinition
+
+\def\Poincare{Poincar\'e }
 
 \ifaj@opt@legacy
 %% Symbol Shortcuts
